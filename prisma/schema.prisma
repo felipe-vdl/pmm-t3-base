@@ -1,0 +1,52 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model Cadastro {
+    id         Int     @id @default(autoincrement())
+
+    razao_social          String
+    cnpj                  String
+    porte_empresa         String
+    enquadramento_empresa String
+    cnae                  String?
+    inscricao_municipal   String?
+    inscricao_estadual    String?
+    produtos_servicos     String
+    cep                   String
+    rua                   String
+    numero_rua            String
+    bairro                String
+    municipio             String
+    estado                String
+    email                 String
+    telefone              String
+    responsavel           String
+
+    created_at DateTime  @default(now())
+    updated_at DateTime? @updatedAt
+
+    @@map("cadastros")
+}
+
+model User {
+    id            Int    @id @default(autoincrement())
+    name          String
+    email         String   @unique
+    password      String
+    is_enabled    Boolean  @default(true)
+    role          Role
+    created_at    DateTime @default(now())
+    updated_at    DateTime? @updatedAt
+    @@map("users")
+}
+enum Role {
+  SUPERADMIN
+  ADMIN
+  USER
+}
